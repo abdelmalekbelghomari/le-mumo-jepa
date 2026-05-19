@@ -1554,6 +1554,21 @@ def main(sweep_config: Optional[Dict] = None):
 
     args = parser.parse_args()
 
+    explicit_args = set()
+    for token in sys.argv[1:]:
+        if token == '--':
+            break
+        if not token.startswith('-'):
+            continue
+        option = token.split('=', 1)[0]
+        action = parser._option_string_actions.get(option)
+        if action is None:
+            continue
+        dest = getattr(action, 'dest', None)
+        if not dest or dest == 'help':
+            continue
+        explicit_args.add(dest)
+
     def _coerce_sweep_override(action, value):
         if value is None:
             return None
@@ -1624,6 +1639,34 @@ def main(sweep_config: Optional[Dict] = None):
         else:
             finetune_task = 'bbox3d'
     args.finetune_task = finetune_task
+
+    # Paper-aligned FLIR defaults apply only when the caller did not override
+    # the corresponding flags via CLI or sweep config.
+    if getattr(args, 'dataset', 'nuscenes') == 'flir':
+        flir_paper_defaults = {
+            'bs': 64,
+            'epochs': 30,
+            'encoder_lr': 2e-5,
+            'decoder_lr': 2e-4,
+            'decoder_dim': 512,
+            'val_freq': 100,
+            'patience': 8,
+            'probe_img_size': 640,
+            'probe_train_img_size': 224,
+            'encoder_warmup_epochs': 0,
+        }
+        sweep_keys = set(sweep_config.keys()) if sweep_config is not None else set()
+        applied_defaults = []
+        for key, value in flir_paper_defaults.items():
+            if key in explicit_args or key in sweep_keys:
+                continue
+            setattr(args, key, value)
+            applied_defaults.append(f"{key}={value}")
+        if applied_defaults:
+            print(
+                "📄 Applying FLIR paper defaults for unset fine-tune args: "
+                + ", ".join(applied_defaults)
+            )
 
     # ── Resolve dataset roots ─────────────────────────────────────────────
     dataset_name = getattr(args, 'dataset', 'nuscenes')

@@ -58,80 +58,63 @@ pip install -r requirements.txt
 
 ### Self-Supervised Pretraining
 
+`train.py` loads [`configs/default.yaml`](configs/default.yaml). Override existing Hydra keys with `key=value`; reserve `+key=value` for new keys only.
+
+These commands use the checked-in paper defaults for the main pruned fusion-token SIGReg setup, so only dataset roots need to be provided.
+
 ```bash
 # Waymo (RGB + LiDAR depth)
 python train.py \
-    +dataset=waymo \
-    +waymo_dataroot=/path/to/waymo_data \
-    +arch=C \
-    +fusion_tokens_sigreg=true \
-    +fusion_tokens_variant=prune_after_first \
-    +aligned_mode=true \
-    +lidar_mode=depth \
-    +lamb=0.1 \
-    +V=2 \
-    +proj_dim=128 \
-    +lr=1e-4 \
-    +bs=64 \
-    +epochs=5
+    dataset=waymo \
+    waymo_dataroot=/path/to/waymo_data
 
 # nuScenes (RGB + LiDAR depth)
 python train.py \
-    +dataroot=/path/to/nuscenes_data \
-    +dataset=nuscenes \
-    +arch=C \
-    +fusion_tokens_sigreg=true \
-    +fusion_tokens_variant=prune_after_first \
-    +aligned_mode=true \
-    +lidar_mode=depth \
-    +lamb=0.1 \
-    +V=2 \
-    +proj_dim=128 \
-    +lr=1e-4 \
-    +bs=64 \
-    +epochs=5
+    dataroot=/path/to/nuscenes_data
 
-# FLIR ADAS (RGB + Thermal)
+# FLIR ADAS from scratch (RGB + Thermal, longer paper schedule)
 python train.py \
-    +dataset=flir \
-    +flir_dataroot=/path/to/flir_adas_v2 \
-    +arch=C \
-    +fusion_tokens_sigreg=true \
-    +fusion_tokens_variant=prune_after_first \
-    +lidar_mode=depth \
-    +lamb=0.1 \
-    +epochs=20
+    dataset=flir \
+    flir_dataroot=/path/to/flir_adas_v2 \
+    epochs=20
+
+# 3-pass auxiliary SIGReg ablation
+python train.py \
+    dataroot=/path/to/nuscenes_data \
+    fusion_skip_aux_sigreg=false
 ```
 
 ### Fine-tuning
 
 ```bash
+# Waymo-pretrained encoder fine-tuned on FLIR
 python finetune.py \
     --checkpoint /path/to/pretrained.pth \
     --dataset flir \
-    --flir_dataroot /path/to/flir_adas_v2 \
-    --epochs 30 \
-    --encoder_lr 2e-5 \
-    --decoder_lr 1e-4
+    --flir_dataroot /path/to/flir_adas_v2
 ```
 
+For `--dataset flir`, unset fine-tuning flags follow the paper schedule: batch size 64, 30 epochs, encoder LR `2e-5`, decoder LR `2e-4`, 3-layer 512D CenterNet, 224 train-view / 640 eval-view probe sizing, validation every 100 steps, patience 8, and end-to-end encoder updates from epoch 0. Override any of these flags explicitly if you want a different schedule.
+
 ### Configuration
-Default training configuration is in [`configs/default.yaml`](configs/default.yaml). The checked-in defaults match the paper-style pruned fusion-token setup. Key hyperparameters:
+
+Default self-supervised training configuration is in [`configs/default.yaml`](configs/default.yaml). The checked-in defaults match the paper's shared fusion-token hyperparameters and keep the main single-pass joint-CLS objective; set `fusion_skip_aux_sigreg=false` to enable the more expensive 3-pass auxiliary ablation. The FLIR from-scratch recipe still uses the paper's longer 20-epoch schedule. Key hyperparameters:
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `arch` | `C` | Base architecture family used for fusion-token training |
 | `fusion_tokens_sigreg` | `true` | Enables the learnable fusion-token Le MuMo JEPA variant |
+| `fusion_skip_aux_sigreg` | `true` | Keeps the paper's main joint-only objective; set to `false` for the 3-pass RGB-only/LiDAR-only auxiliary ablation |
 | `fusion_tokens_variant` | `prune_after_first` | Pruned fusion-token routing used in the paper |
 | `aligned_mode` | `true` | Uses a 1-channel aligned companion modality input |
 | `lidar_mode` | `depth` | Uses aligned depth-style inputs instead of 5-channel range images |
 | `lamb` | `0.1` | SIGReg trade-off weight |
 | `V` | `2` | Number of global crops |
-| `local_crops_number` | `4` | Number of local crops |
-| `proj_dim` | `128` | Projection dimension for SIGReg |
-| `bs` | `32` | Batch size |
-| `lr` | `0.002` | Learning rate |
-| `epochs` | `10` | Number of training epochs |
+| `local_crops_number` | `8` | Number of local crops |
+| `proj_dim` | `16` | Projection dimension for SIGReg |
+| `bs` | `64` | Batch size |
+| `lr` | `1e-4` | Learning rate |
+| `epochs` | `5` | Number of self-supervised training epochs for the shared paper setup |
 
 ## Repository Structure
 

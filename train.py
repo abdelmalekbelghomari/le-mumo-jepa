@@ -2,10 +2,10 @@
 
 Example:
     python train.py \
-        +dataroot=/path/to/nuscenes_data \
-        +arch=C \
-        +fusion_tokens_sigreg=true \
-        +fusion_tokens_variant=prune_after_first
+        dataroot=/path/to/nuscenes_data \
+        arch=C \
+        fusion_tokens_sigreg=true \
+        fusion_tokens_variant=prune_after_first
 """
 
 from __future__ import annotations
@@ -1269,7 +1269,7 @@ def evaluate_modality_dropout(net, probes, test_loader, arch, device):
     return metrics
 
 
-@hydra.main(version_base=None)
+@hydra.main(version_base=None, config_path="configs", config_name="default")
 def main(cfg: DictConfig):
     """Main training loop for MM-LeJEPA with enhanced probes."""
     
@@ -1561,9 +1561,25 @@ def main(cfg: DictConfig):
         print("🐞 DEBUG MODE ENABLED: Running 1 epoch, 1 batch per loop")
         epochs = 1
     
-    # Load WandB key
+    # Load WandB key. Prefer the configured dataset root when available so
+    # FLIR/Waymo runs do not require an unrelated nuScenes dataroot override.
     if not debug_model:
-        project_root = Path(cfg.dataroot).parent
+        dataset_root_keys = {
+            'nuscenes': ('dataroot',),
+            'waymo': ('waymo_dataroot', 'dataroot'),
+            'flir': ('flir_dataroot', 'dataroot'),
+        }
+        dataset_root = None
+        root_keys = dataset_root_keys.get(
+            configured_dataset_name,
+            ('dataroot', 'waymo_dataroot', 'flir_dataroot'),
+        )
+        for root_key in root_keys:
+            root_value = getattr(cfg, root_key, None)
+            if root_value:
+                dataset_root = Path(root_value)
+                break
+        project_root = dataset_root.parent if dataset_root is not None else PROJECT_DIR.parent
         load_wandb_key(project_root)
     
     # Initialize logging
@@ -4665,9 +4681,11 @@ def main(cfg: DictConfig):
                         loss_sigreg_rgb_ft = torch.tensor(0.0, device=device)
                         loss_sigreg_lidar_ft = torch.tensor(0.0, device=device)
                         fusion_masked_loss = torch.tensor(0.0, device=device)
-                        fusion_sigreg_total = loss_sigreg_joint
+                        # The base LeJEPA loss already includes the joint fused SIGReg term.
+                        # Joint-only mode therefore disables all auxiliary additions here.
+                        fusion_sigreg_total = torch.tensor(0.0, device=device)
                         fusion_aux_applied = False
-                        fusion_aux_scale = 1.0
+                        fusion_aux_scale = 0.0
                     else:
                         fusion_aux_applied = (current_step % fusion_aux_train_freq == 0)
                         fusion_aux_scale = float(fusion_aux_train_freq) if fusion_aux_applied else 0.0
