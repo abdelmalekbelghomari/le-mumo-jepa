@@ -104,10 +104,13 @@ except Exception:
 # Optional wandb
 try:
     import wandb
+    if not hasattr(wandb, "init"):
+        raise ImportError("Imported shadowed wandb module without SDK entrypoints")
     WANDB_AVAILABLE = True
 except ImportError:
+    wandb = None
     WANDB_AVAILABLE = False
-    print("WandB not available, logging to console only")
+    print("WandB not available or shadowed, logging to console only")
 
 # Local imports
 from src.dataset import MMNuScenesDataset, mm_collate_fn
