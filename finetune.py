@@ -1325,12 +1325,15 @@ def generate_dummy_batch(batch_size: int, arch: str, device: str = 'cuda',
         modality2 = torch.randn(batch_size, 1, modality2_channels, img_size, img_size, device=device)
 
     max_objects = 50
+    gt_mask = (torch.rand(batch_size, max_objects) > 0.7).float()
     labels = {
         'gt_classes': torch.randint(0, NUM_DETECTION_CLASSES, (batch_size, max_objects)),
+        'gt_classes_2d': torch.randint(0, NUM_FLIR_2D_CLASSES, (batch_size, max_objects)),
         'gt_centers': torch.randn(batch_size, max_objects, 3) * 20,
         'gt_sizes': torch.rand(batch_size, max_objects, 3) * 5 + 0.5,
         'gt_orientations': F.normalize(torch.randn(batch_size, max_objects, 2), dim=-1),
-        'gt_mask': (torch.rand(batch_size, max_objects) > 0.7).float(),
+        'gt_mask': gt_mask,
+        'gt_mask_2d': gt_mask.clone(),
         'gt_centers_2d': torch.rand(batch_size, max_objects, 2),
         'seg_map': torch.randint(0, 16, (batch_size, 14, 14)),
         'scene': torch.randint(0, 10, (batch_size,)),
