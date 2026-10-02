@@ -151,13 +151,26 @@ class PairedRGBIRDataset(FlirAdasDataset):
         return cam_views, modality2, self._get_global_labels(pair)
 
 
-def build_rgbir_dataset(name: str, root: str, splits, **kwargs) -> PairedRGBIRDataset:
+DEFAULT_SPLITS = {
+    "llvip": ["train", "test"],
+    "kaist": ["train-all-04.txt", "test-all-04.txt"],
+}
+
+
+def list_rgbir_pairs(name: str, root: str, splits=None) -> List[Tuple[Path, Path]]:
     name = str(name).lower()
-    splits = _as_list(splits)
+    splits = _as_list(splits) or DEFAULT_SPLITS.get(name, [])
     if name == "llvip":
-        pairs = list_llvip_pairs(root, splits or ["train", "test"])
-    elif name == "kaist":
-        pairs = list_kaist_pairs(root, splits or ["train-all-04.txt", "test-all-04.txt"])
-    else:
-        raise ValueError(f"Unknown RGB/IR dataset '{name}'. Use 'llvip' or 'kaist'.")
-    return PairedRGBIRDataset(pairs, name=name, **kwargs)
+        return list_llvip_pairs(root, splits)
+    if name == "kaist":
+        return list_kaist_pairs(root, splits)
+    raise ValueError(f"Unknown RGB/IR dataset '{name}'. Use 'llvip' or 'kaist'.")
+
+
+def build_rgbir_dataset(sources, **kwargs) -> PairedRGBIRDataset:
+    """sources: list of (name, root, splits). Several sources are concatenated
+    into one pair list, like ConcatDataset in the 4-JEPA rgb_ir loader."""
+    pairs = []
+    for name, root, splits in sources:
+        pairs.extend(list_rgbir_pairs(name, root, splits))
+    return PairedRGBIRDataset(pairs, name="+".join(str(n).lower() for n, _, _ in sources), **kwargs)

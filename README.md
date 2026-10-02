@@ -84,26 +84,25 @@ python train.py \
     fusion_skip_aux_sigreg=false
 ```
 
-### LLVIP / KAIST (RGB + LWIR, SSL only)
+### LLVIP + KAIST (RGB + LWIR, SSL only) and FLIR-aligned probing
 
-LLVIP and KAIST have no probe labels in this pipeline, so they are used for encoder-only pretraining; the checkpoint is then evaluated on FLIR ADAS v2 with frozen probes.
+LLVIP and KAIST have no probe labels in this pipeline, so they are used for encoder-only pretraining. `dataset=rgbir` concatenates the sources listed in `rgbir_sources` (`dataset=llvip` / `dataset=kaist` train on one source).
 
 ```bash
-# LLVIP: visible/{train,test} + infrared/{train,test}
-python train.py dataset=llvip +llvip_dataroot=/path/to/LLVIP "+llvip_splits=[train,test]" \
-    +encoder_only_mode=true epochs=20 +run_name=lemumo_llvip +save_root=/path/to/runs
-
-# KAIST: imageSets/*.txt split files (default: train-all-04.txt + test-all-04.txt)
-python train.py dataset=kaist +kaist_dataroot=/path/to/KAIST "+kaist_splits=[train-all-04.txt,test-all-04.txt]" \
-    +encoder_only_mode=true epochs=20 +run_name=lemumo_kaist +save_root=/path/to/runs
-
-# Frozen FLIR probing of the pretrained encoder
-python train.py dataset=flir flir_dataroot=/path/to/flir_adas_v2 \
-    +pretrained_encoder_path=/path/to/runs/lemumo_llvip/latest.pt +probe_only_training=true \
-    V=1 local_crops_number=0 epochs=5 +probe_img_size=640
+python train.py dataset=rgbir "+rgbir_sources=[llvip,kaist]" \
+    +llvip_dataroot=/path/to/LLVIP "+llvip_splits=[train,test]" \
+    +kaist_dataroot=/path/to/KAIST "+kaist_splits=[train-all-04.txt,test-all-04.txt]" \
+    +encoder_only_mode=true epochs=20 +run_name=lemumo_llvip_kaist +save_root=/path/to/runs
 ```
 
-SLURM scripts running both steps (CRIANN / Jean Zay) are in [`slurm/`](slurm/).
+The checkpoint is then evaluated with a per-token multi-label linear probe on FLIR aligned (`probing/`, same protocol as the 4-JEPA / MJEPA probing scripts, only the encoder loading differs). RGB-only and IR-only features zero the other modality; `both` concatenates them and `joint` feeds both modalities to the fusion encoder.
+
+```bash
+python probing/run_probings_lemumo.py --jepa_checkpoint /path/to/runs/lemumo_llvip_kaist/latest.pt \
+    --flir_root /path/to/FLIR_aligned --modes rgb ir both joint
+```
+
+[`slurm/lemumo_llvip_kaist.sl`](slurm/lemumo_llvip_kaist.sl) runs both steps on CRIANN or Jean Zay.
 
 ### Fine-tuning
 

@@ -1573,6 +1573,7 @@ def main(cfg: DictConfig):
             'flir': ('flir_dataroot', 'dataroot'),
             'llvip': ('llvip_dataroot', 'dataroot'),
             'kaist': ('kaist_dataroot', 'dataroot'),
+            'rgbir': ('llvip_dataroot', 'kaist_dataroot', 'dataroot'),
         }
         dataset_root = None
         root_keys = dataset_root_keys.get(
@@ -1887,20 +1888,30 @@ def main(cfg: DictConfig):
                 resize_mode=flir_resize_mode,
             )
             _collate_fn = flir_collate_fn
-        elif dataset_name in {'llvip', 'kaist'}:
+        elif dataset_name in {'llvip', 'kaist', 'rgbir'}:
             from src.rgbir_dataset import build_rgbir_dataset, rgbir_collate_fn
 
             if not encoder_only_mode:
                 raise ValueError(
                     f"dataset={dataset_name} has no probe labels: pretrain with encoder_only_mode=true, "
-                    "then evaluate the checkpoint on FLIR with pretrained_encoder_path + probe_only_training"
+                    "then probe the checkpoint separately (e.g. probing/run_probings_lemumo.py on FLIR aligned)"
                 )
-            rgbir_root = getattr(cfg, f'{dataset_name}_dataroot', None) or getattr(cfg, 'dataroot', '')
-            rgbir_splits = getattr(cfg, f'{dataset_name}_splits', None)
+            # dataset=rgbir concatenates every name listed in rgbir_sources
+            # (default llvip + kaist); each source reads <name>_dataroot / <name>_splits.
+            source_names = (
+                list(getattr(cfg, 'rgbir_sources', None) or ['llvip', 'kaist'])
+                if dataset_name == 'rgbir' else [dataset_name]
+            )
+            rgbir_sources = []
+            for source_name in source_names:
+                source_root = getattr(cfg, f'{source_name}_dataroot', None)
+                if not source_root and len(source_names) == 1:
+                    source_root = getattr(cfg, 'dataroot', '')
+                if not source_root:
+                    raise ValueError(f"Missing +{source_name}_dataroot for dataset={dataset_name}")
+                rgbir_sources.append((source_name, source_root, getattr(cfg, f'{source_name}_splits', None)))
             train_ds = build_rgbir_dataset(
-                dataset_name,
-                rgbir_root,
-                rgbir_splits,
+                rgbir_sources,
                 split="train",
                 arch=arch,
                 V=num_global_views,
@@ -1916,9 +1927,7 @@ def main(cfg: DictConfig):
             # No held-out split: everything goes to SSL, and validation is
             # skipped in encoder_only_mode. The loader still expects a test set.
             test_ds = build_rgbir_dataset(
-                dataset_name,
-                rgbir_root,
-                rgbir_splits,
+                rgbir_sources,
                 split="val",
                 arch=arch,
                 V=1,
