@@ -31,6 +31,7 @@ except (RuntimeError, AttributeError):
     pass
 
 import math
+import random
 import sys
 import os
 import subprocess
@@ -1594,10 +1595,13 @@ def main(cfg: DictConfig):
     trainer_started_wandb_run = False
     if use_wandb:
         if getattr(wandb, 'run', None) is None:
+            wandb_run_id = getattr(cfg, 'wandb_run_id', None)
             wandb.init(
                 project=getattr(cfg, 'wandb_project', None) or os.environ.get('WANDB_PROJECT') or "le-mumo-jepa",
                 name=run_name,
                 config=dict(cfg),
+                id=wandb_run_id,
+                resume="allow" if wandb_run_id else None,
             )
             trainer_started_wandb_run = True
         run_obj = getattr(wandb, 'run', None)
@@ -3285,6 +3289,84 @@ def main(cfg: DictConfig):
         scheduler_encoder = _build_scheduler(opt_encoder) if opt_encoder is not None else None
     scaler_encoder = GradScaler(enabled=(device == "cuda" and opt_encoder is not None))
 
+    # Periodic checkpoint + resume (encoder-only SSL). resume.pt in the run's
+    # save dir holds everything the encoder update depends on; a rerun with the
+    # same run_name/save_root continues from the last completed epoch.
+    ckpt_every_epochs = max(0, int(getattr(cfg, 'ckpt_every_epochs', 0) or 0))
+    resume_enabled = bool(getattr(cfg, 'resume', False))
+    resume_path = None
+    start_epoch = 0
+    if (ckpt_every_epochs > 0 or resume_enabled) and not debug_model and run_name is not None:
+        if not encoder_only_mode:
+            raise ValueError("ckpt_every_epochs/resume only cover encoder_only_mode (probe states are not checkpointed)")
+        resume_path = Path(getattr(cfg, 'save_root', None) or PROJECT_DIR / "saved_models") / run_name / "resume.pt"
+
+    def _resume_modules():
+        modules = {"encoder": net}
+        for module_name, module in (
+            ("teacher_net", teacher_net),
+            ("dino_student_head", dino_student_head),
+            ("dino_teacher_head", dino_teacher_head),
+            ("ibot_student_head", ibot_student_head),
+            ("ibot_teacher_head", ibot_teacher_head),
+        ):
+            if module is not None:
+                modules[module_name] = module
+        return modules
+
+    def _save_resume_checkpoint(next_epoch: int):
+        state = {
+            "epoch": next_epoch,
+            "epochs": epochs,
+            "config": dict(cfg),
+            "arch": arch,
+            "run_name": run_name,
+            "modules": {k: m.state_dict() for k, m in _resume_modules().items()},
+            "encoder": net.state_dict(),  # same key as the final checkpoint, so probing can use resume.pt
+            "opt_encoder": opt_encoder.state_dict() if opt_encoder is not None else None,
+            "scheduler_encoder": scheduler_encoder.state_dict() if scheduler_encoder is not None else None,
+            "scaler_encoder": scaler_encoder.state_dict(),
+            "rng": {
+                "torch": torch.get_rng_state(),
+                "cuda": torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
+                "numpy": np.random.get_state(),
+                "python": random.getstate(),
+            },
+        }
+        resume_path.parent.mkdir(parents=True, exist_ok=True)
+        tmp_path = resume_path.with_suffix(".pt.tmp")
+        torch.save(state, tmp_path)
+        os.replace(tmp_path, resume_path)  # atomic: a job killed mid-save keeps the previous checkpoint
+        print(f"💾 Resume checkpoint saved: {resume_path} (next epoch {next_epoch}/{epochs})")
+
+    if resume_enabled and resume_path is not None and resume_path.exists():
+        state = torch.load(resume_path, map_location="cpu", weights_only=False)
+        if int(state.get("epochs", epochs)) != epochs:
+            raise ValueError(
+                f"{resume_path} was saved for epochs={state.get('epochs')} but epochs={epochs}: "
+                "the LR schedule would not match"
+            )
+        for module_name, module in _resume_modules().items():
+            module.load_state_dict(state["modules"][module_name])
+        if opt_encoder is not None and state.get("opt_encoder") is not None:
+            opt_encoder.load_state_dict(state["opt_encoder"])
+        if scheduler_encoder is not None and state.get("scheduler_encoder") is not None:
+            scheduler_encoder.load_state_dict(state["scheduler_encoder"])
+        scaler_encoder.load_state_dict(state["scaler_encoder"])
+        rng = state.get("rng", {})
+        if rng.get("torch") is not None:
+            torch.set_rng_state(rng["torch"])
+        if rng.get("cuda") is not None and torch.cuda.is_available():
+            torch.cuda.set_rng_state_all(rng["cuda"])
+        if rng.get("numpy") is not None:
+            np.random.set_state(rng["numpy"])
+        if rng.get("python") is not None:
+            random.setstate(rng["python"])
+        start_epoch = int(state["epoch"])
+        print(f"🔁 Resumed from {resume_path}: starting at epoch {start_epoch + 1}/{epochs}")
+    elif resume_enabled:
+        print(f"🔁 No resume checkpoint at {resume_path}: starting from scratch")
+
     def _new_health_stats():
         return {
             "steps": 0,
@@ -3479,7 +3561,7 @@ def main(cfg: DictConfig):
                 )
     
     acc_scene = 0.0 # Initialize to avoid UnboundLocalError
-    for epoch in range(epochs):
+    for epoch in range(start_epoch, epochs):
         pretrained_trunk_frozen = False
         if pretrained_trunk_params and pretrained_trunk_warmup_freeze_epochs > 0 and not freeze_encoder:
             pretrained_trunk_frozen = epoch < pretrained_trunk_warmup_freeze_epochs
@@ -5866,6 +5948,11 @@ def main(cfg: DictConfig):
             else:
                 print("🚀 Skipping validation in debug_model mode")
             acc_scene = 0.0
+
+        if resume_path is not None and ckpt_every_epochs > 0 and (
+            (epoch + 1) % ckpt_every_epochs == 0 or epoch + 1 == epochs
+        ):
+            _save_resume_checkpoint(epoch + 1)
 
     if estimate_encoder_train_compute:
         if estimate_stats is None or estimate_stats["measured_batches"] <= 0:

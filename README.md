@@ -102,7 +102,7 @@ python probing/run_probings_lemumo.py --jepa_checkpoint /path/to/runs/lemumo_llv
     --flir_root /path/to/FLIR_aligned --modes rgb ir both joint
 ```
 
-[`slurm/lemumo_llvip_kaist.sl`](slurm/lemumo_llvip_kaist.sl) runs both steps on CRIANN or Jean Zay.
+[`slurm/lemumo_llvip_kaist.sl`](slurm/lemumo_llvip_kaist.sl) runs both steps on CRIANN or Jean Zay. Long runs (default 600 epochs) span several jobs: `+ckpt_every_epochs=1 +resume=true` writes `resume.pt` (encoder, optimizer, LR scheduler, grad scaler, RNG) after each epoch and resumes from it, and the script resubmits itself until `latest.pt` exists.
 
 W&B: `+wandb_project=...` (or `WANDB_PROJECT`) sets the pretraining project; `--wandb_project` on the probing wrapper logs one run per seed (per-epoch loss/mAP/AP per class, ROC curves) plus a summary run (mean ± std over seeds, table of all runs), grouped under the pretraining run name.
 
