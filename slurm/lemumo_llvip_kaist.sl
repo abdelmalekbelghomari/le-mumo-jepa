@@ -51,7 +51,7 @@ if [ "${CLUSTER}" = "jeanzay" ]; then
     module load pytorch-gpu/py3/2.6.0
     DATA_DIR="${DATA_DIR:-${SCRATCH}/datasets}"
     LOG_DIR="${LOG_DIR:-${WORK}/logs/lemumo}"
-    export WANDB_MODE=offline            # pas d'internet sur les nœuds de calcul
+    export WANDB_MODE=offline            # pas d'internet : 'wandb sync ${WANDB_DIR}/wandb/offline-run-*' depuis une frontale
 else
     module load cray-python/3.11.7
     module load aidl/pytorch/2.6.0-cuda12.6
@@ -90,6 +90,10 @@ mkdir -p "${LOG_DIR}"
 export PYTHONPATH="${PYTHONPATH:-}:$(pwd)"
 export PYTHONUNBUFFERED=1
 export WANDB_DIR="${LOG_DIR}"
+# W&B : pretraining (loss, sigreg, inv, débit, VRAM par batch) puis probing
+# (un run par seed + un run "summary" moyenne ± std), tous dans le groupe ${RUN_NAME}.
+# WANDB_MODE=disabled pour couper W&B.
+export WANDB_PROJECT="${WANDB_PROJECT:-lemumo_rgbir_small}"
 
 echo "================================================================="
 echo " Job ${SLURM_JOB_ID} | cluster=${CLUSTER} | node ${SLURM_JOB_NODELIST}"
@@ -99,6 +103,7 @@ echo " FLIR al.  : ${FLIR_ALIGNED_ROOT}"
 echo " Run       : ${RUN_DIR}"
 echo " pretrain  : epochs=${EPOCHS} bs=${BATCH_SIZE} lr=${LR} lamb=${LAMB} local=${NUM_LOCAL}"
 echo " probing   : ${NUM_RUNS} runs | modes=${PROBE_MODES} | IR norm mean=${IR_MEAN} std=${IR_STD}"
+echo " W&B       : project=${WANDB_PROJECT} group=${RUN_NAME} mode=${WANDB_MODE}"
 echo "================================================================="
 nvidia-smi
 
@@ -121,6 +126,7 @@ else
         local_crops_number=${NUM_LOCAL} \
         +num_workers=${NUM_WORKERS} \
         +run_name="${RUN_NAME}" \
+        +wandb_project="${WANDB_PROJECT}" \
         +save_root="${LOG_DIR}" \
         hydra.run.dir="${RUN_DIR}/hydra_pretrain"
 fi
@@ -139,4 +145,6 @@ srun python3 probing/run_probings_lemumo.py \
     --device "${PROBE_DEVICE:-cuda:0}" \
     --ir_mean ${IR_MEAN} \
     --ir_std ${IR_STD} \
+    --wandb_project "${WANDB_PROJECT}" \
+    --wandb_group "${RUN_NAME}" \
     --modes ${PROBE_MODES}

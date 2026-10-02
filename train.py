@@ -1594,7 +1594,11 @@ def main(cfg: DictConfig):
     trainer_started_wandb_run = False
     if use_wandb:
         if getattr(wandb, 'run', None) is None:
-            wandb.init(project="le-mumo-jepa", name=run_name, config=dict(cfg))
+            wandb.init(
+                project=getattr(cfg, 'wandb_project', None) or os.environ.get('WANDB_PROJECT') or "le-mumo-jepa",
+                name=run_name,
+                config=dict(cfg),
+            )
             trainer_started_wandb_run = True
         run_obj = getattr(wandb, 'run', None)
         run_name = run_name or getattr(run_obj, 'name', None)

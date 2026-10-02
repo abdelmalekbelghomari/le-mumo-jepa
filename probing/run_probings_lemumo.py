@@ -40,6 +40,10 @@ def main():
     parser.add_argument('--device', type=str, default=None)
     parser.add_argument('--tokenizer_by_modality', type=str, default='True',
                         help="Le MuMo : True (IR 1 canal)")
+    parser.add_argument('--wandb_project', type=str, default='',
+                        help="Projet W&B ('' = pas de W&B). Un run par seed + un run 'summary'.")
+    parser.add_argument('--wandb_group', type=str, default='',
+                        help="Groupe W&B (défaut : nom du dossier du checkpoint)")
     parser.add_argument('--modes', nargs='+', default=['rgb', 'ir', 'both'],
                         choices=['rgb', 'ir', 'both', 'joint'])
     args = parser.parse_args()
@@ -84,6 +88,8 @@ def main():
             "--ir_mean", args.ir_mean,
             "--ir_std", args.ir_std,
             "--modes", *args.modes,
+            "--wandb_project", args.wandb_project,
+            "--wandb_group", args.wandb_group,
         ]
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
@@ -136,6 +142,31 @@ def main():
             if valid_values:
                 print(f"  {key:<12} │ Moyenne = {np.mean(valid_values):.4f} │ Écart-type (±) = {np.std(valid_values):.4f} │ Variance = {np.var(valid_values):.6f}")
     print("="*55)
+
+    log_summary_to_wandb(args, metrics, csv_headers, csv_rows)
+
+
+def log_summary_to_wandb(args, metrics, csv_headers, csv_rows):
+    """Run W&B 'summary' : moyenne ± écart-type sur les runs + table de tous les runs."""
+    if not args.wandb_project or os.environ.get('WANDB_MODE') == 'disabled':
+        return
+    try:
+        import wandb
+    except ImportError:
+        return
+    group = args.wandb_group or os.path.basename(os.path.dirname(os.path.abspath(args.jepa_checkpoint)))
+    run = wandb.init(project=args.wandb_project, group=group, job_type='flir_aligned_probe_summary',
+                     name=f"{group}_probe_summary", config=vars(args))
+    for mode, values_by_key in metrics.items():
+        for key, values in values_by_key.items():
+            valid = [v for v in values if not np.isnan(v)]
+            if valid:
+                run.summary[f'{mode}/{key}_mean'] = float(np.mean(valid))
+                run.summary[f'{mode}/{key}_std'] = float(np.std(valid))
+    run.log({'probing_runs': wandb.Table(columns=csv_headers,
+                                         data=[[row.get(h) for h in csv_headers] for row in csv_rows])})
+    run.finish()
+
 
 if __name__ == '__main__':
     main()

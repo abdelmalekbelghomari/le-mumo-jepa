@@ -104,6 +104,8 @@ python probing/run_probings_lemumo.py --jepa_checkpoint /path/to/runs/lemumo_llv
 
 [`slurm/lemumo_llvip_kaist.sl`](slurm/lemumo_llvip_kaist.sl) runs both steps on CRIANN or Jean Zay.
 
+W&B: `+wandb_project=...` (or `WANDB_PROJECT`) sets the pretraining project; `--wandb_project` on the probing wrapper logs one run per seed (per-epoch loss/mAP/AP per class, ROC curves) plus a summary run (mean ± std over seeds, table of all runs), grouped under the pretraining run name.
+
 ### Fine-tuning
 
 ```bash

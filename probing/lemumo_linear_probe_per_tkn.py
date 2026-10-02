@@ -64,6 +64,35 @@ def set_seed(seed):
 
 
 # ------------------------------------------------------------------
+# W&B (logging seulement : n'influence ni les données ni l'entraînement du probe)
+# ------------------------------------------------------------------
+
+def wandb_init(args):
+    """Un run W&B par seed, groupé par checkpoint. Désactivé si --wandb_project
+       est vide, si wandb n'est pas installé ou si WANDB_MODE=disabled."""
+    if not args.wandb_project or os.environ.get('WANDB_MODE') == 'disabled':
+        return None
+    try:
+        import wandb
+    except ImportError:
+        print("⚠️  wandb non installé : logging TensorBoard uniquement")
+        return None
+    group = args.wandb_group or Path(args.jepa_checkpoint).resolve().parent.name
+    return wandb.init(
+        project=args.wandb_project,
+        group=group,
+        job_type='flir_aligned_probe',
+        name=f"{group}_probe_seed{args.seed}",
+        config=vars(args),
+    )
+
+
+def wandb_log(run, data, step=None):
+    if run is not None:
+        run.log(data, step=step)
+
+
+# ------------------------------------------------------------------
 # 1. PARSING XML -> LABEL MULTI-LABEL
 # ------------------------------------------------------------------
 
@@ -619,6 +648,12 @@ def train_probe(args, mode: str, writer: SummaryWriter) -> float:
         for cls in FLIR_CLASSES:
             if not np.isnan(val_ap[cls]):
                 writer.add_scalar(f'AP_{tag}/{cls}_val', val_ap[cls], epoch)
+        wandb_log(args.wandb_run, {
+            f'{tag}/epoch': epoch,
+            f'{tag}/train_loss': train_loss, f'{tag}/val_loss': val_loss,
+            f'{tag}/train_mAP': train_map, f'{tag}/val_mAP': val_map,
+            **{f'{tag}/val_AP_{cls}': val_ap[cls] for cls in FLIR_CLASSES if not np.isnan(val_ap[cls])},
+        })
 
         # Print terminal
         ap_str = ' | '.join(f"{cls}={val_ap[cls]:.3f}"
@@ -649,6 +684,9 @@ def train_probe(args, mode: str, writer: SummaryWriter) -> float:
             mode, args.output_dir
         )
     writer.add_figure(f'ROC_Curves/{mode.upper()}', fig, global_step=args.epochs)
+    if args.wandb_run is not None:
+        import wandb
+        args.wandb_run.log({f'{tag}/roc_curve': wandb.Image(fig)})
     plt.close(fig)
 
     print(f"\n✨ SCORES ROC FINAUX POUR {tag} (Meilleure Époque) :")
@@ -657,6 +695,10 @@ def train_probe(args, mode: str, writer: SummaryWriter) -> float:
             fpr_val, tpr_val, _ = roc_curve(best_epoch_data['val_labels'][:, i], best_epoch_data['val_scores'][:, i])
             roc_auc_val = auc(fpr_val, tpr_val)
             print(f"METRIC_AUC_{tag}_{cls_name.upper()}: {roc_auc_val:.4f}")
+            if args.wandb_run is not None:
+                args.wandb_run.summary[f'{tag}/best_val_AUC_{cls_name}'] = roc_auc_val
+    if args.wandb_run is not None:
+        args.wandb_run.summary[f'{tag}/best_val_mAP'] = best_val_map
 
     return best_val_map
 
@@ -712,6 +754,10 @@ def main():
     # Output
     parser.add_argument('--output_dir', type=str, default='./output_linear_probing')
     parser.add_argument('--log_dir',    type=str, default='./logs_linear_probing')
+    parser.add_argument('--wandb_project', type=str, default='',
+                        help="Projet W&B ('' = pas de W&B)")
+    parser.add_argument('--wandb_group', type=str, default='',
+                        help="Groupe W&B (défaut : nom du dossier du checkpoint = run de pretraining)")
 
     args = parser.parse_args()
     if not args.tokenizer_by_modality:
@@ -722,12 +768,15 @@ def main():
     logdir = os.path.join(args.log_dir, datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
 
     writer = SummaryWriter(log_dir=logdir)
+    args.wandb_run = wandb_init(args)
 
     results = {}
     for mode in args.modes:
         results[mode] = train_probe(args, mode, writer)
 
     writer.close()
+    if args.wandb_run is not None:
+        args.wandb_run.finish()
 
     # ------------------------------------------------------------------
     # Résumé final
