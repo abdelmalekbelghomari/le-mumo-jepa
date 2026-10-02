@@ -84,6 +84,26 @@ python train.py \
     fusion_skip_aux_sigreg=false
 ```
 
+### LLVIP + KAIST (RGB + LWIR, SSL only) and FLIR-aligned probing
+
+LLVIP and KAIST have no probe labels in this pipeline, so they are used for encoder-only pretraining. `dataset=rgbir` concatenates the sources listed in `rgbir_sources` (`dataset=llvip` / `dataset=kaist` train on one source).
+
+```bash
+python train.py dataset=rgbir "+rgbir_sources=[llvip,kaist]" \
+    +llvip_dataroot=/path/to/LLVIP "+llvip_splits=[train,test]" \
+    +kaist_dataroot=/path/to/KAIST "+kaist_splits=[train-all-04.txt,test-all-04.txt]" \
+    +encoder_only_mode=true epochs=20 +run_name=lemumo_llvip_kaist +save_root=/path/to/runs
+```
+
+The checkpoint is then evaluated with a per-token multi-label linear probe on FLIR aligned (`probing/`, same protocol as the 4-JEPA / MJEPA probing scripts, only the encoder loading differs). RGB-only and IR-only features zero the other modality; `both` concatenates them and `joint` feeds both modalities to the fusion encoder.
+
+```bash
+python probing/run_probings_lemumo.py --jepa_checkpoint /path/to/runs/lemumo_llvip_kaist/latest.pt \
+    --flir_root /path/to/FLIR_aligned --modes rgb ir both joint
+```
+
+[`slurm/lemumo_llvip_kaist.sl`](slurm/lemumo_llvip_kaist.sl) runs both steps on CRIANN or Jean Zay.
+
 ### Fine-tuning
 
 ```bash

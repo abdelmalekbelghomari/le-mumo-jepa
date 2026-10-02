@@ -1571,6 +1571,9 @@ def main(cfg: DictConfig):
             'nuscenes': ('dataroot',),
             'waymo': ('waymo_dataroot', 'dataroot'),
             'flir': ('flir_dataroot', 'dataroot'),
+            'llvip': ('llvip_dataroot', 'dataroot'),
+            'kaist': ('kaist_dataroot', 'dataroot'),
+            'rgbir': ('llvip_dataroot', 'kaist_dataroot', 'dataroot'),
         }
         dataset_root = None
         root_keys = dataset_root_keys.get(
@@ -1586,15 +1589,15 @@ def main(cfg: DictConfig):
         load_wandb_key(project_root)
     
     # Initialize logging
-    run_name = None
+    run_name = getattr(cfg, 'run_name', None)
     use_wandb = WANDB_AVAILABLE and getattr(cfg, 'wandb', True) and not debug_model
     trainer_started_wandb_run = False
     if use_wandb:
         if getattr(wandb, 'run', None) is None:
-            wandb.init(project="le-mumo-jepa", config=dict(cfg))
+            wandb.init(project="le-mumo-jepa", name=run_name, config=dict(cfg))
             trainer_started_wandb_run = True
         run_obj = getattr(wandb, 'run', None)
-        run_name = getattr(run_obj, 'name', None)
+        run_name = run_name or getattr(run_obj, 'name', None)
     
     if not run_name:
         from datetime import datetime
@@ -1885,6 +1888,55 @@ def main(cfg: DictConfig):
                 resize_mode=flir_resize_mode,
             )
             _collate_fn = flir_collate_fn
+        elif dataset_name in {'llvip', 'kaist', 'rgbir'}:
+            from src.rgbir_dataset import build_rgbir_dataset, rgbir_collate_fn
+
+            if not encoder_only_mode:
+                raise ValueError(
+                    f"dataset={dataset_name} has no probe labels: pretrain with encoder_only_mode=true, "
+                    "then probe the checkpoint separately (e.g. probing/run_probings_lemumo.py on FLIR aligned)"
+                )
+            # dataset=rgbir concatenates every name listed in rgbir_sources
+            # (default llvip + kaist); each source reads <name>_dataroot / <name>_splits.
+            source_names = (
+                list(getattr(cfg, 'rgbir_sources', None) or ['llvip', 'kaist'])
+                if dataset_name == 'rgbir' else [dataset_name]
+            )
+            rgbir_sources = []
+            for source_name in source_names:
+                source_root = getattr(cfg, f'{source_name}_dataroot', None)
+                if not source_root and len(source_names) == 1:
+                    source_root = getattr(cfg, 'dataroot', '')
+                if not source_root:
+                    raise ValueError(f"Missing +{source_name}_dataroot for dataset={dataset_name}")
+                rgbir_sources.append((source_name, source_root, getattr(cfg, f'{source_name}_splits', None)))
+            train_ds = build_rgbir_dataset(
+                rgbir_sources,
+                split="train",
+                arch=arch,
+                V=num_global_views,
+                global_crops_scale=global_crops_scale,
+                local_crops_scale=local_crops_scale,
+                local_crops_number=local_crops_number,
+                img_size=input_img_size,
+                local_img_size=input_local_img_size,
+                modality_dropout=modality_dropout,
+                include_probe_view=dataset_include_probe_view,
+                dino_aug_mode=dino_aug_mode,
+            )
+            # No held-out split: everything goes to SSL, and validation is
+            # skipped in encoder_only_mode. The loader still expects a test set.
+            test_ds = build_rgbir_dataset(
+                rgbir_sources,
+                split="val",
+                arch=arch,
+                V=1,
+                local_crops_number=0,
+                img_size=input_img_size,
+                local_img_size=input_local_img_size,
+                include_probe_view=dataset_include_probe_view,
+            )
+            _collate_fn = rgbir_collate_fn
         else:
             train_ds = MMNuScenesDataset(
                 cfg.dataroot, 
@@ -5963,7 +6015,7 @@ def main(cfg: DictConfig):
 
     # Save model
     if not debug_model and run_name is not None:
-        save_dir = PROJECT_DIR / "saved_models" / run_name
+        save_dir = Path(getattr(cfg, 'save_root', None) or PROJECT_DIR / "saved_models") / run_name
         save_dir.mkdir(parents=True, exist_ok=True)
         save_dict = {
             "encoder": net.state_dict(),
