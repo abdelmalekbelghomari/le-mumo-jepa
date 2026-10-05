@@ -1,0 +1,1618 @@
+=================================================================
+ Job 3251400 | maillon 1/6 | cluster=criann | node c23meso2
+ LLVIP     : /home/2023029/PARTAGE/datasets/LLVIP  (train + test)
+ KAIST     : /home/2023029/PARTAGE/datasets/KAIST  (train-all-04.txt,test-all-04.txt)
+ FLIR al.  : /home/2023029/PARTAGE/datasets/FLIR
+ Run       : /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1
+ pretrain  : epochs=600 bs=64 lr=1.0e-4 lamb=0.1 local=8
+ probing   : 10 runs | modes=rgb ir both joint | IR norm mean=0.449 std=0.226
+ W&B       : project=lemumo_rgbir_small group=lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1 mode=online
+=================================================================
+Fri Oct  2 17:24:44 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 565.57.01              Driver Version: 565.57.01      CUDA Version: 12.7     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H200                    Off |   00000000:C1:00.0 Off |                    0 |
+| N/A   27C    P0             77W /  700W |       1MiB / 143771MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+Maillon 1/6 : successeur soumis (job 3251402, afterany:3251400)
+⚡ ENCODER-ONLY MODE: disabling probe training/validation, patch probes, and dataset-side probe/label work
+
+============================================================
+MM-LeJEPA Training - Architecture: C, LiDAR Mode: depth, ViT: small
+Baselines: No Fusion=False, RGB Zero=False, Freeze Encoder=False
+============================================================
+🎲 Random seed: 42
+Device: cuda
+🛡️ ROBUST SPLITTING: Using scene-based split (70% Train / 10% Buffer / 20% Val)
+LLVIP split 'train': 12025 pairs
+LLVIP split 'test': 3463 pairs
+KAIST split 'train-all-04.txt': 12538 pairs
+KAIST split 'test-all-04.txt': 11288 pairs
+PairedRGBIRDataset [llvip+kaist, arch=C, modality=thermal]: 39314 paired samples, Global=2, Local=8
+LLVIP split 'train': 12025 pairs
+LLVIP split 'test': 3463 pairs
+KAIST split 'train-all-04.txt': 12538 pairs
+KAIST split 'test-all-04.txt': 11288 pairs
+PairedRGBIRDataset [llvip+kaist, arch=C, modality=thermal]: 39314 paired samples, Global=1, Local=0
+Training samples: 39314
+Validation samples: 39314
+🎯 FUSION TOKENS ENCODER: attention_mode=prune_after_first, fusion_start_layer=0
+🎯 ALIGNED MODE: Using camera-aligned LiDAR representations
+⚙️  Patch probes disabled for heavy custom Arch C scenario (memory-safe mode)
+ℹ️  Patch-based probes skipped (arch=C does not expose patch tokens)
+Using 22 workers per dataloader (Manual override)
+🔁 No resume checkpoint at /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt: starting from scratch
+
+Starting training for 600 epochs...
+Hyperparams: arch=C, lamb=0.1, V=2, proj_dim=16, bs=64
+Probes: ['scene', 'camera', 'location', 'num_cars', 'num_peds', 'num_objs', 'mean_depth', 'depth_grid', 'grid_occupancy', 'grid_occupancy_car', 'grid_occupancy_ped', 'distance_dist', 'cross_modal']
+📏 Encoder compute estimate: 5.141 GMAC/call, 10.283 GFLOP/call
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 1/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 2/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 3/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 4/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 5/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 6/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 7/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 8/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 9/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 10/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 11/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 12/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 13/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 14/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 15/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 16/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 17/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 18/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 19/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 20/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 21/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 22/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 23/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 24/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 25/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 26/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 27/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 28/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 29/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 30/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 31/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 32/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 33/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 34/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 35/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 36/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 37/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 38/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 39/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 40/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 41/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 42/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 43/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 44/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 45/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 46/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 47/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 48/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 49/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 50/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 51/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 52/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 53/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 54/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 55/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 56/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 57/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 58/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 59/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 60/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 61/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 62/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 63/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 64/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 65/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 66/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 67/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 68/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 69/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 70/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 71/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 72/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 73/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 74/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 75/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 76/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 77/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 78/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 79/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 80/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 81/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 82/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 83/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 84/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 85/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 86/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 87/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 88/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 89/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 90/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 91/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 92/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 93/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 94/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 95/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 96/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 97/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 98/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 99/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 100/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 101/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 102/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 103/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 104/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 105/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 106/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 107/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 108/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 109/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 110/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 111/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 112/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 113/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 114/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 115/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 116/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 117/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 118/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 119/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 120/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 121/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 122/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 123/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 124/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 125/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 126/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 127/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 128/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 129/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 130/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 131/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 132/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 133/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 134/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 135/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 136/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 137/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 138/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 139/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 140/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 141/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 142/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 143/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 144/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 145/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 146/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 147/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 148/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 149/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 150/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 151/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 152/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 153/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 154/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 155/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 156/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 157/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 158/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 159/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 160/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 161/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 162/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 163/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 164/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 165/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 166/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 167/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 168/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 169/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 170/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 171/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 172/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 173/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 174/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 175/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 176/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 177/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 178/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 179/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 180/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 181/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 182/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 183/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 184/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 185/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 186/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 187/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 188/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 189/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 190/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 191/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 192/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 193/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 194/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 195/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 196/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 197/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 198/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 199/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 200/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 201/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 202/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 203/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 204/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 205/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 206/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 207/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 208/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 209/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 210/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 211/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 212/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 213/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 214/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 215/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 216/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 217/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 218/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 219/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 220/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 221/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 222/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 223/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 224/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 225/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 226/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 227/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 228/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 229/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 230/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 231/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 232/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 233/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 234/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 235/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 236/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 237/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 238/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 239/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 240/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 241/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 242/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 243/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 244/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 245/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 246/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 247/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 248/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 249/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 250/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 251/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 252/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 253/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 254/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 255/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 256/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 257/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 258/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 259/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 260/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 261/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 262/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 263/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 264/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 265/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 266/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 267/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 268/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 269/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 270/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 271/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 272/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 273/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 274/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 275/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 276/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 277/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 278/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 279/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 280/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 281/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 282/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 283/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 284/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 285/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 286/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 287/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 288/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 289/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 290/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 291/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 292/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 293/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 294/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 295/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 296/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 297/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 298/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 299/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 300/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 301/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 302/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 303/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 304/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 305/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 306/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 307/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 308/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 309/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 310/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 311/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 312/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 313/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 314/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 315/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 316/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 317/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 318/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 319/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 320/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 321/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 322/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 323/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 324/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 325/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 326/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 327/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 328/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 329/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 330/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 331/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 332/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 333/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 334/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 335/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 336/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 337/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 338/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 339/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 340/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 341/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 342/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 343/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 344/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 345/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 346/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 347/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 348/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 349/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 350/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 351/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 352/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 353/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 354/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 355/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 356/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 357/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 358/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 359/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 360/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 361/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 362/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 363/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 364/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 365/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 366/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 367/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 368/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 369/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 370/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 371/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 372/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 373/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 374/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 375/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 376/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 377/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 378/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 379/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 380/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 381/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 382/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 383/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 384/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 385/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 386/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 387/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 388/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 389/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 390/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 391/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 392/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 393/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 394/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 395/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 396/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 397/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 398/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 399/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 400/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 401/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 402/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 403/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 404/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 405/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 406/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 407/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 408/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 409/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 410/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 411/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 412/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 413/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 414/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 415/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 416/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 417/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 418/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 419/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 420/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 421/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 422/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 423/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 424/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 425/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 426/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 427/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 428/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 429/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 430/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 431/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 432/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 433/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 434/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 435/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 436/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 437/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 438/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 439/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 440/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 441/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 442/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 443/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 444/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 445/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 446/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 447/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 448/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 449/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 450/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 451/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 452/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 453/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 454/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 455/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 456/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 457/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 458/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 459/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 460/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 461/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 462/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 463/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 464/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 465/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 466/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 467/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 468/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 469/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 470/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 471/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 472/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 473/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 474/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 475/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 476/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 477/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 478/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 479/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 480/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 481/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 482/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 483/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 484/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 485/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 486/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 487/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 488/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 489/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 490/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 491/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 492/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 493/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 494/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 495/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 496/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 497/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 498/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 499/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 500/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 501/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 502/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 503/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 504/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 505/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 506/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 507/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 508/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 509/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 510/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+⚡ Skipping end-of-epoch validation in encoder-only mode
+💾 Resume checkpoint saved: /home/2023029/PARTAGE/abelgh02/logs/lemumo/lemumo_vits16_llvip-kaistfull04_ep600_bs64_lamb0.1/resume.pt (next epoch 511/600)
+📏 Encoder SSL FLOPs/profiled step: 7096.408 GFLOP
+
+########################################
+   Comptabilité du calcul 3251400 
+########################################
+$ sacct --format='JobID,Partition,JobName,MaxRSS,MaxVMSize,NTasks,AllocCPUS,Start,End,Elapsed,AveCPU,MinCPU,NNodes,ExitCode,State' -j 3251400
+JobID           Partition  JobName             MaxRSS   MaxVMSize  NTasks  AllocCPUS  Start                End                  Elapsed     AveCPU  MinCPU  NNodes  ExitCode  State      
+-----           ---------  -------             -------  ---------  ------  ---------  -----                ---                  -------     ------  ------  ------  --------  -----      
+3251400         gpu_h200   lemumo_llvip_kaist                              24         2026-10-02T17:24:42  2026-10-03T17:25:10  1-00:00:28                  1       0:0       TIMEOUT    
+3251400.batch              batch                                   1       24         2026-10-02T17:24:42  2026-10-03T17:25:11  1-00:00:29                  1       0:15      CANCELLED  
+3251400.extern             extern                                  1       24         2026-10-02T17:24:42  2026-10-03T17:25:13  1-00:00:31                  1       0:0       COMPLETED  
+3251400.0                  python3                                 1       24         2026-10-02T17:24:44  2026-10-03T17:25:13  1-00:00:29                  1       0:15      CANCELLED  
+
+$ sacct --format='JobID,JobName,AllocCPUS,ReqTRES,AllocTRES,NNodes,NodeList,Elapsed,CPUTime' -j 3251400
+JobID           JobName             AllocCPUS  ReqTRES                                          AllocTRES                                                        NNodes  NodeList  Elapsed     CPUTime      
+-----           -------             ---------  -------                                          ---------                                                        ------  --------  -------     -------      
+3251400         lemumo_llvip_kaist  24         billing=58,cpu=24,gres/gpu=1,mem=240000M,node=1  billing=58,cpu=24,gres/gpu:h200=1,gres/gpu=1,mem=240000M,node=1  1       c23meso2  1-00:00:28  24-00:11:12  
+3251400.batch   batch               24                                                          cpu=24,gres/gpu:h200=1,gres/gpu=1,mem=240000M,node=1             1       c23meso2  1-00:00:29  24-00:11:36  
+3251400.extern  extern              24                                                          billing=58,cpu=24,gres/gpu:h200=1,gres/gpu=1,mem=240000M,node=1  1       c23meso2  1-00:00:31  24-00:12:24  
+3251400.0       python3             24                                                          cpu=24,gres/gpu:h200=1,gres/gpu=1,mem=240000M,node=1             1       c23meso2  1-00:00:29  24-00:11:36  
+
+Pour plus d'informations sur la comptabilité du calcul, merci de consulter la documentation http://www-tech.criann.fr ou le manuel 'man sacct'
